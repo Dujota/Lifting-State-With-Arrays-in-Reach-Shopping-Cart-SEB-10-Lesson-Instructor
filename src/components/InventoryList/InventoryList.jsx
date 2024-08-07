@@ -1,7 +1,7 @@
-const InventoryList = ({inventory})=> {
+const InventoryList = ({inventory, title})=> {
  return (
   <div>
-    <h2>Inventory List</h2>
+    <h2>{title}</h2>
     <ul>
         {inventory.map((item) => (
           <li key={item._id}>
