@@ -13,11 +13,22 @@ const Shop = () => {
   const [shopInventory, setShopInventory] = useState(inventoryData);
   const [userInventory, setUserInventory] = useState([]);
 
-  const handleAddItem = () => {
-    const mockItem = { _id: 62345, name: 'Banana', price: .27 }
-    const mockItem2 = { _id: 61345, name: 'Banana', price: .27 }
+  const handleAddItem = (selectedItem) => {
+    // filter the item out of the inventory
+    const newShopInventory = shopInventory.filter( item => item._id !== selectedItem._id)
+    setShopInventory(newShopInventory)
+    // add the incoming item to the user list
+    setUserInventory([...userInventory,  selectedItem])
 
-    setShopInventory([mockItem, mockItem2])
+  }
+
+  const handleRemoveItem = (selectedItem) => {
+    // filter the item out of the inventory
+    const newUserInventory = userInventory.filter( item => item._id !== selectedItem._id)
+    setUserInventory(newUserInventory)
+    // add the incoming item to the user list
+    setShopInventory([...shopInventory,  selectedItem])
+
   }
 
   return (
@@ -25,9 +36,13 @@ const Shop = () => {
       <h1>Shop</h1>
       <section className="shop-section">
         {/* Shop */}
-        <InventoryList title="Shop Inventory" inventory={shopInventory} />
+        <InventoryList
+          title="Shop Inventory"
+          inventory={shopInventory}
+          handleItemClick={handleAddItem}
+        />
         {/* Cart */}
-        <InventoryList title="User Inventory" inventory={userInventory} />
+        <InventoryList title="User Inventory" inventory={userInventory} handleItemClick={handleRemoveItem}/>
       </section>
     </main>
   );
